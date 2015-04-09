@@ -6,7 +6,7 @@ package polandWrite;
 public class Currency {
     private String currency;
 
-    Currency(String currency){
+    public Currency(String currency){
         setCurrency(currency);
     }
 

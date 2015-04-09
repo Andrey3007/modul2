@@ -8,11 +8,11 @@ public class Number {
     private Currency currency;
 
 
-    Number(String val){
+   public Number(String val){
         System.out.println(val+"df");
         setValue(Double.parseDouble(val));
     }
-    Number(Double d){
+   public Number(Double d){
         setValue(d);
     }
 

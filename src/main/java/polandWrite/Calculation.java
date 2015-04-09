@@ -79,20 +79,19 @@ public class Calculation {
                 }
             }
         }
-        for (int i = 0; i < inPut.size() - 1; i++) {
+        for (int i = 0; i-1 < inPut.size() - 1; i++) {
             if (inPut.get(i) instanceof Currency) {
                 if (inPut.get(i - 1) instanceof Number) {
                     ((Number) inPut.get(i - 1)).setCurrency((Currency) inPut.remove(i));
-                    i--;
+                    i=0;
                 } else {
                     if (inPut.get(i + 1) instanceof Number) {
                         ((Number) inPut.get(i + 1)).setCurrency((Currency) inPut.remove(i));
-                        i--;
+                        i=0;
                     } else {
                         throw new NumberFormatException();
                     }
                 }
-
             }
         }
 
@@ -111,14 +110,17 @@ public class Calculation {
                         continue ;
                     }
 
-                    if (tmpStorage.getLast() instanceof Conversion & !((NotNumber) inPut.getFirst()).getType().equals(")")) {
-                        tmpStorage.addLast((NotNumber) inPut.removeFirst());
-                        break g;
+                    if (tmpStorage.getLast() instanceof Conversion & inPut.getFirst() instanceof NotNumber) {
+                        if(!((NotNumber) inPut.getFirst()).getType().equals(")")) {
+                            tmpStorage.addLast((NotNumber) inPut.removeFirst());
+                            break g;
+                        }
                     }
-
-                    if (((NotNumber) inPut.getFirst()).getPriority() > tmpStorage.getLast().getPriority()) {
-                        tmpStorage.addLast((NotNumber) inPut.removeFirst());
-                        break g;
+                    if(inPut.getFirst() instanceof NotNumber) {
+                        if (((NotNumber) inPut.getFirst()).getPriority() > tmpStorage.getLast().getPriority()) {
+                            tmpStorage.addLast((NotNumber) inPut.removeFirst());
+                            break g;
+                        }
                     }
 
                     if (((NotNumber) inPut.getFirst()).getPriority() < tmpStorage.getLast().getPriority()) {
@@ -249,6 +251,14 @@ public class Calculation {
     }
 
 
+    public LinkedList getInPut() {
+        return inPut;
+    }
+
+    public LinkedList getEndPut() {
+        return endPut;
+    }
+
     public boolean isOperator(char x) {
         if (x == '+' || x == '-' || x == '*' || x == '/' || x == '(' || x == ')') {
             return true;
@@ -265,7 +275,7 @@ public class Calculation {
         }
     }
 
-    private boolean isConversion(char ch) {
+    public boolean isConversion(char ch) {
         if (ch == 't' || ch == 'o') {
             return true;
         } else {
@@ -273,7 +283,7 @@ public class Calculation {
         }
     }
 
-    private boolean isDot(char ch) {
+    public boolean isDot(char ch) {
         if (ch == '.') {
             return true;
         } else {
@@ -281,15 +291,7 @@ public class Calculation {
         }
     }
 
-    private boolean isCurrency(String s) {
-        if (s.equals("USD") || s.equals("EUR")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private boolean isCurrency(char c) {
+    public boolean isCurrency(char c) {
         if (c == '$') {
             return true;
         } else {

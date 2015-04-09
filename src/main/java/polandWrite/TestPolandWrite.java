@@ -21,8 +21,12 @@ public class TestPolandWrite {
 //        System.out.println(calc.endPut.toString());
 
 
-        System.out.println(calc.full("toEuro(toDollar(8$)+7eur)"));
-        System.out.println(calc.endPut.toString());
+        System.out.println(calc.full("toEuro(8$)+6EUR"));
+//        calc.preper("toEuro(8$)+6eur");
+//        System.out.println(calc.inPut);
+//        System.out.println(calc.endPut.toString());
+
+
 
 
     }
