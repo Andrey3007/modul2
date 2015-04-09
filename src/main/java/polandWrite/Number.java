@@ -7,6 +7,7 @@ public class Number {
     private Double value;
     private Currency currency;
 
+
     Number(String val){
         System.out.println(val+"df");
         setValue(Double.parseDouble(val));
@@ -38,4 +39,6 @@ public class Number {
                 ", currency=" + currency +
                 '}';
     }
+
+
 }

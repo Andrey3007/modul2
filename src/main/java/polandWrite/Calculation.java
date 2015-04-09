@@ -2,6 +2,7 @@ package polandWrite;
 
 import jdk.nashorn.internal.runtime.Debug;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -223,13 +224,25 @@ public class Calculation {
 
             if (endPut.size()!=0 && endPut.getLast() instanceof Conversion){
                 Number number=(Number) endPut.get(endPut.size() - 2);
-                number.setValue(number.getValue()*((Conversion) endPut.getLast()).getRaw());
+                Conversion conv= (Conversion)endPut.getLast();
+                Number number1= null;
+                try {
+                    number1 = conv.conversion(number.getCurrency().getCurrency(), conv.getEndCur(), number.getValue());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 endPut.removeLast();
                 endPut.removeLast();
-                endPut.addLast(number);
+                endPut.addLast(number1);
             }
             LOGGER.info(endPut.toString());
             if(endPut.size()==1 & inPut.size()==0 & tmpStorage.size()==0){
+                double d= ((Number)endPut.getFirst()).getValue();
+                d=d*100;
+                int i =(int)Math.round(d);
+                d=(double)i/100;
+                ((Number)endPut.getFirst()).setValue(d);
                 break;
             }
         }

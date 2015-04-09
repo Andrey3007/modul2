@@ -1,5 +1,7 @@
 package polandWrite;
 
+import java.io.FileNotFoundException;
+
 /**
  * Created by Андрей on 04.04.2015.
  */
@@ -19,7 +21,7 @@ public class NotNumber {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(String type) throws FileNotFoundException {
         this.type = type;
     }
 

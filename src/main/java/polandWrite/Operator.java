@@ -1,5 +1,7 @@
 package polandWrite;
 
+import java.io.FileNotFoundException;
+
 /**
  * Created by Андрей on 01.04.2015.
  */
@@ -33,7 +35,11 @@ public class Operator extends NotNumber {
     }
 
     public void setType(String type) {
-        super.setType(type);
+        try {
+            super.setType(type);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
