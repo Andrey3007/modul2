@@ -23,7 +23,7 @@ public class Calculation {
     }
 
     public void preper(String str) {
-        str = str.replace("", "");
+        str = str.replace(" ", "");
         str = str.replace(",", "\\.");
 
         StringBuilder sbNum = new StringBuilder();
@@ -36,19 +36,11 @@ public class Calculation {
             if (isNum(ch[i]) || isDot(ch[i])) {
                 sbNum.append(ch[i]);
             } else if (isOperator(ch[i])) {
-                if (sbNum.length() != 0) {
-                    Double d = Double.parseDouble(sbNum.toString());
-                    inPut.addLast(new Number(d));
-                    sbNum.delete(0, sbNum.length());
-                }
+                parseNumberAndPut(sbNum);
                 inPut.addLast(new Operator(ch[i]));
 
             } else if (isConversion(ch[i]) && isConversion(ch[i + 1])) {
-                if (sbNum.length() != 0) {
-                    Double d = Double.parseDouble(sbNum.toString());
-                    inPut.addLast(new Number(d));
-                    sbNum.delete(0, sbNum.length());
-                }
+                parseNumberAndPut(sbNum);
 
                 StringBuilder strb = new StringBuilder();
                 for (; ; i++) {
@@ -59,19 +51,10 @@ public class Calculation {
                 }
                 inPut.addLast(new Conversion(new String(strb)));
             } else if (isCurrency(ch[i])) {
-                if (sbNum.length() != 0) {
-                    Double d = Double.parseDouble(sbNum.toString());
-                    inPut.addLast(new Number(d));
-                    sbNum.delete(0, sbNum.length());
-                }
+                parseNumberAndPut(sbNum);
                 inPut.addLast(new Currency(ch[i]));
             } else {
-                if (sbNum.length() != 0) {
-                    Double d = Double.parseDouble(sbNum.toString());
-                    inPut.addLast(new Number(d));
-                    sbNum.delete(0, sbNum.length());
-                }
-
+                parseNumberAndPut(sbNum);
                 sbCur.append(ch[i]);
                 if (sbCur.length() == 3) {
                     inPut.addLast(new Currency(sbCur.toString()));
@@ -79,6 +62,12 @@ public class Calculation {
                 }
             }
         }
+        joinCurrencyWithNumber();
+
+
+    }
+
+    private void joinCurrencyWithNumber() {
         for (int i = 0; i-1 < inPut.size() - 1; i++) {
             if (inPut.get(i) instanceof Currency) {
                 if (inPut.get(i - 1) instanceof Number) {
@@ -94,8 +83,14 @@ public class Calculation {
                 }
             }
         }
+    }
 
-
+    private void parseNumberAndPut(StringBuilder sbNum) {
+        if (sbNum.length() != 0) {
+            Double d = Double.parseDouble(sbNum.toString());
+            inPut.addLast(new Number(d));
+            sbNum.delete(0, sbNum.length());
+        }
     }
 
     public void convertToPoland() {
@@ -238,7 +233,9 @@ public class Calculation {
                 endPut.removeLast();
                 endPut.addLast(number1);
             }
+
             LOGGER.info(endPut.toString());
+
             if(endPut.size()==1 & inPut.size()==0 & tmpStorage.size()==0){
                 double d= ((Number)endPut.getFirst()).getValue();
                 d=d*100;
@@ -260,11 +257,7 @@ public class Calculation {
     }
 
     public boolean isOperator(char x) {
-        if (x == '+' || x == '-' || x == '*' || x == '/' || x == '(' || x == ')') {
-            return true;
-        } else {
-            return false;
-        }
+        return (x == '+' || x == '-' || x == '*' || x == '/' || x == '(' || x == ')');
     }
 
     public boolean isNum(char x) {
