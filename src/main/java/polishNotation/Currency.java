@@ -1,4 +1,4 @@
-package polandWrite;
+package polishNotation;
 
 /**
  * Created by Андрей on 02.04.2015.

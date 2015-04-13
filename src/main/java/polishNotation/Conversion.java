@@ -1,10 +1,9 @@
-package polandWrite;
+package polishNotation;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
 import java.net.MalformedURLException;
@@ -19,7 +18,7 @@ public class Conversion extends NotNumber {
     private double raw = 1;
     public String endCur;
 
-    Conversion(String type) {
+    public Conversion(String type) {
         try {
             setType(type);
         } catch (FileNotFoundException e) {

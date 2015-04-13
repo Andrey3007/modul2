@@ -1,4 +1,4 @@
-package polandWrite;
+package polishNotation;
 
 import java.io.FileNotFoundException;
 
@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 public class Operator extends NotNumber {
 
 
-    Operator(char operator) {
+    public Operator(char operator) {
         String s = new String();
         s = s + operator;
         setType(s);
@@ -18,7 +18,6 @@ public class Operator extends NotNumber {
             setPriority(2);
         } else {
             setPriority(0);
-
         }
     }
 
